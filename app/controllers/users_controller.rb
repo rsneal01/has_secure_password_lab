@@ -3,7 +3,13 @@ class UsersController < ApplicationController
     end
 
     def create
-        User.create(user_params)
+        # binding.pry
+        @user = User.create(user_params)
+        if @user.password != @user.password_confirmation
+            redirect_to '/user/new'
+        else
+            session[:user_id] = User.last.id
+        end
     end
 
     def show
